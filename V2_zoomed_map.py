@@ -90,10 +90,18 @@ class mainmap(QtWidgets.QMainWindow):
 		# self.currentdirection =  self.uicompass.showdirection()
 
 		# print(self.currentdirection)
+
+		#slider
+		self.ui.slideleft.sliderMoved.connect(self.slidechange)
 	
     
 
-        
+	def slidechange(self):
+		self.value = self.ui.slideleft.value()
+		self.ui.ovl4.setText(str(self.value))
+		print(self.value)
+
+
 	def mode(self):
 	
 	

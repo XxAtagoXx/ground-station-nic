@@ -30,7 +30,7 @@ class mainw(QtWidgets.QMainWindow):
         self.webview = QWebEngineView()
 
         # Load the desired website
-        self.webview.load(QUrl("http://127.0.0.1:5500/orientedRocket2.html"))
+        self.webview.load(QUrl("http://127.0.0.1:5500/orientationReal.html"))
         layout.addWidget(self.webview)
        
 
