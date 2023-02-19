@@ -21,10 +21,10 @@ background-color:red;
   <widget class="QFrame" name="rightframe">
    <property name="geometry">
     <rect>
-     <x>1420</x>
+     <x>1310</x>
      <y>100</y>
-     <width>491</width>
-     <height>951</height>
+     <width>601</width>
+     <height>961</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -83,7 +83,18 @@ border:2px solid black;
 color: green;
 font: bold;
 }
+QLabel#ovl4{
 
+font: 20pt &quot;MS Shell Dlg 2&quot;;
+color: green;
+font: bold;
+}
+QLabel#ov1{
+
+font: 20pt &quot;MS Shell Dlg 2&quot;;
+color: green;
+font: bold;
+}
 
 Line#point{
 
@@ -157,7 +168,7 @@ border:2px solid black;
    <widget class="QPushButton" name="start">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>100</x>
       <y>760</y>
       <width>89</width>
       <height>81</height>
@@ -179,7 +190,7 @@ border:2px solid black;
    <widget class="QDial" name="meter">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>230</x>
       <y>730</y>
       <width>161</width>
       <height>131</height>
@@ -202,7 +213,7 @@ border:2px solid black;
    <widget class="QSlider" name="slideright">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>430</x>
       <y>150</y>
       <width>22</width>
       <height>251</height>
@@ -215,7 +226,7 @@ border:2px solid black;
    <widget class="QProgressBar" name="battery">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>430</x>
       <y>670</y>
       <width>51</width>
       <height>161</height>
@@ -237,7 +248,7 @@ border:2px solid black;
    <widget class="QProgressBar" name="barright">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>490</x>
       <y>670</y>
       <width>51</width>
       <height>161</height>
@@ -281,7 +292,7 @@ border:2px solid black;
    <widget class="QLabel" name="altitude">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>400</x>
       <y>110</y>
       <width>111</width>
       <height>31</height>
@@ -303,7 +314,7 @@ border:2px solid black;
    <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>280</x>
       <y>780</y>
       <width>64</width>
       <height>23</height>
@@ -314,9 +325,9 @@ border:2px solid black;
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>160</y>
-      <width>61</width>
-      <height>231</height>
+      <y>150</y>
+      <width>131</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="text">
@@ -329,7 +340,7 @@ border:2px solid black;
    <widget class="QLabel" name="ruler_2">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>400</x>
       <y>150</y>
       <width>21</width>
       <height>251</height>
@@ -337,70 +348,6 @@ border:2px solid black;
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; ═══════════════&lt;/p&gt;&lt;p&gt; ═══════════════&lt;/p&gt;&lt;p&gt;═══════════════&lt;/p&gt;&lt;p&gt; ═══════════════&lt;/p&gt;&lt;p&gt; ═══════════════&lt;/p&gt;&lt;p&gt; ═══════════════&lt;/p&gt;&lt;p&gt; ═══════════════&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="wordWrap">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="ov1">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>150</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;3450&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="wordWrap">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="ov2">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>220</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;3350&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="wordWrap">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="ov3">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>290</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;3250&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="wordWrap">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="ov4">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>360</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;3150&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="wordWrap">
      <bool>false</bool>
@@ -447,7 +394,7 @@ border:2px solid black;
    <widget class="QLabel" name="msl">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>450</x>
       <y>50</y>
       <width>61</width>
       <height>31</height>
@@ -469,7 +416,7 @@ border:2px solid black;
    <widget class="QLabel" name="speed_3">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>510</x>
       <y>50</y>
       <width>61</width>
       <height>31</height>
@@ -623,7 +570,7 @@ border:2px solid black;
    <widget class="QLabel" name="gps">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>400</x>
       <y>550</y>
       <width>71</width>
       <height>31</height>
@@ -645,7 +592,7 @@ border:2px solid black;
    <widget class="QLabel" name="agl">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>400</x>
       <y>590</y>
       <width>71</width>
       <height>31</height>
@@ -711,7 +658,7 @@ border:2px solid black;
    <widget class="QWidget" name="compass" native="true">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>200</x>
       <y>120</y>
       <width>191</width>
       <height>191</height>
@@ -788,8 +735,8 @@ border:2px solid black;
    <widget class="QLabel" name="direction">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>420</y>
+      <x>160</x>
+      <y>460</y>
       <width>61</width>
       <height>31</height>
      </rect>
@@ -810,8 +757,8 @@ border:2px solid black;
    <widget class="QLabel" name="direction1">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>420</y>
+      <x>250</x>
+      <y>460</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -832,7 +779,7 @@ border:2px solid black;
    <widget class="QLabel" name="gps1">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>480</x>
       <y>550</y>
       <width>91</width>
       <height>31</height>
@@ -854,7 +801,7 @@ border:2px solid black;
    <widget class="QLabel" name="agl1">
     <property name="geometry">
      <rect>
-      <x>370</x>
+      <x>480</x>
       <y>590</y>
       <width>91</width>
       <height>31</height>
@@ -876,7 +823,7 @@ border:2px solid black;
    <widget class="Line" name="point_2">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>50</x>
       <y>530</y>
       <width>491</width>
       <height>16</height>
@@ -889,7 +836,7 @@ border:2px solid black;
    <widget class="Line" name="point_4">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>50</x>
       <y>90</y>
       <width>491</width>
       <height>16</height>
@@ -897,6 +844,22 @@ border:2px solid black;
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ov1">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>150</y>
+      <width>131</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
@@ -942,7 +905,7 @@ background-color:white;
      <rect>
       <x>50</x>
       <y>90</y>
-      <width>1391</width>
+      <width>1281</width>
       <height>971</height>
      </rect>
     </property>

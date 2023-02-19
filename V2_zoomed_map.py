@@ -92,14 +92,40 @@ class mainmap(QtWidgets.QMainWindow):
 		# print(self.currentdirection)
 
 		#slider
-		self.ui.slideleft.sliderMoved.connect(self.slidechange)
+		self.ui.slideleft.valueChanged.connect(self.slidechange)
+		self.ui.slideleft.setMaximum(50000)
+		self.value = 0
+		self.ui.slideleft.setValue(self.value)
+
+		#slider2
+		self.ui.slideright.valueChanged.connect(self.slidechange2)
+		self.ui.slideright.setMaximum(50000)
+		self.value2 = 0
+		self.ui.slideleft.setValue(self.value2)
+
+
+
 	
-    
+		#creating timer
+		self.timer = QTimer()
+		self.timer.timeout.connect(self.update)
+		self.timer.start(100)
+
+	def update(self):
+		self.value += 100
+		self.value2 += 100
+		self.ui.slideleft.setValue(self.value)
+		self.ui.slideright.setValue(self.value2)
 
 	def slidechange(self):
 		self.value = self.ui.slideleft.value()
 		self.ui.ovl4.setText(str(self.value))
 		print(self.value)
+	
+	def slidechange2(self):
+		self.value2 = self.ui.slideright.value()
+		self.ui.ov1.setText(str(self.value2))
+
 
 
 	def mode(self):
