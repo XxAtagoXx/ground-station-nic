@@ -81,13 +81,36 @@ class Ui_finale(object):
 "color: green;\n"
 "font: bold;\n"
 "}\n"
+"QPushButton#monitor{\n"
+"\n"
+"font: 17pt \"MS Shell Dlg 2\";\n"
+"color: green;\n"
+"font: bold;\n"
+"}\n"
+"QPushButton#control{\n"
+"\n"
+"font: 15pt \"MS Shell Dlg 2\";\n"
+"color: green;\n"
+"font: bold;\n"
+"}\n"
 "QLabel#ov1{\n"
 "\n"
 "font: 20pt \"MS Shell Dlg 2\";\n"
 "color: green;\n"
 "font: bold;\n"
 "}\n"
+"QLabel#speed1{\n"
 "\n"
+"font: 20pt \"MS Shell Dlg 2\";\n"
+"color: green;\n"
+"font: bold;\n"
+"}\n"
+"QLabel#speed{\n"
+"\n"
+"font: 20pt \"MS Shell Dlg 2\";\n"
+"color: green;\n"
+"font: bold;\n"
+"}\n"
 "Line#point{\n"
 "\n"
 "background-color: red;\n"
@@ -112,7 +135,7 @@ class Ui_finale(object):
         self.control.setCheckable(True)
         self.control.setObjectName("control")
         self.speed = QtWidgets.QLabel(self.rightframe)
-        self.speed.setGeometry(QtCore.QRect(0, 50, 71, 41))
+        self.speed.setGeometry(QtCore.QRect(0, 50, 121, 41))
         self.speed.setStyleSheet("")
         self.speed.setTextFormat(QtCore.Qt.PlainText)
         self.speed.setWordWrap(False)
@@ -176,7 +199,7 @@ class Ui_finale(object):
         self.ruler_3.setWordWrap(False)
         self.ruler_3.setObjectName("ruler_3")
         self.speed1 = QtWidgets.QLabel(self.rightframe)
-        self.speed1.setGeometry(QtCore.QRect(70, 50, 141, 41))
+        self.speed1.setGeometry(QtCore.QRect(130, 50, 171, 41))
         self.speed1.setStyleSheet("")
         self.speed1.setTextFormat(QtCore.Qt.PlainText)
         self.speed1.setWordWrap(False)

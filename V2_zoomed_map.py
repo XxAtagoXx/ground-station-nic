@@ -114,8 +114,10 @@ class mainmap(QtWidgets.QMainWindow):
 	def update(self):
 		self.value += 100
 		self.value2 += 100
+		self.value3 = self.value+self.value2
 		self.ui.slideleft.setValue(self.value)
 		self.ui.slideright.setValue(self.value2)
+		self.ui.speed1.setText(str(self.value3))
 
 	def slidechange(self):
 		self.value = self.ui.slideleft.value()

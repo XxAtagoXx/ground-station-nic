@@ -89,13 +89,36 @@ font: 20pt &quot;MS Shell Dlg 2&quot;;
 color: green;
 font: bold;
 }
+QPushButton#monitor{
+
+font: 17pt &quot;MS Shell Dlg 2&quot;;
+color: green;
+font: bold;
+}
+QPushButton#control{
+
+font: 15pt &quot;MS Shell Dlg 2&quot;;
+color: green;
+font: bold;
+}
 QLabel#ov1{
 
 font: 20pt &quot;MS Shell Dlg 2&quot;;
 color: green;
 font: bold;
 }
+QLabel#speed1{
 
+font: 20pt &quot;MS Shell Dlg 2&quot;;
+color: green;
+font: bold;
+}
+QLabel#speed{
+
+font: 20pt &quot;MS Shell Dlg 2&quot;;
+color: green;
+font: bold;
+}
 Line#point{
 
 background-color: red;
@@ -148,7 +171,7 @@ border:2px solid black;
      <rect>
       <x>0</x>
       <y>50</y>
-      <width>71</width>
+      <width>121</width>
       <height>41</height>
      </rect>
     </property>
@@ -372,9 +395,9 @@ border:2px solid black;
    <widget class="QLabel" name="speed1">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>130</x>
       <y>50</y>
-      <width>141</width>
+      <width>171</width>
       <height>41</height>
      </rect>
     </property>
