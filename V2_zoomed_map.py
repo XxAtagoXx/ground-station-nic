@@ -91,7 +91,7 @@ class mainmap(QtWidgets.QMainWindow):
 
 		# print(self.currentdirection)
 
-		#slider
+		#slider  #inorder to show values from hardware , change the value of setValue = array[]
 		self.ui.slideleft.valueChanged.connect(self.slidechange)
 		self.ui.slideleft.setMaximum(50000)
 		self.value = 0

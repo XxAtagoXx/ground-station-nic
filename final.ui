@@ -116,7 +116,7 @@ border:2px solid black;
      <rect>
       <x>0</x>
       <y>10</y>
-      <width>71</width>
+      <width>151</width>
       <height>31</height>
      </rect>
     </property>
@@ -130,9 +130,9 @@ border:2px solid black;
    <widget class="QPushButton" name="control">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>160</x>
       <y>10</y>
-      <width>71</width>
+      <width>171</width>
       <height>31</height>
      </rect>
     </property>
@@ -147,9 +147,9 @@ border:2px solid black;
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>60</y>
+      <y>50</y>
       <width>71</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -168,10 +168,10 @@ border:2px solid black;
    <widget class="QPushButton" name="start">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>760</y>
-      <width>89</width>
-      <height>81</height>
+      <x>38</x>
+      <y>720</y>
+      <width>151</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="layoutDirection">
@@ -248,7 +248,7 @@ border:2px solid black;
    <widget class="QProgressBar" name="barright">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>530</x>
       <y>670</y>
       <width>51</width>
       <height>161</height>
@@ -272,7 +272,7 @@ border:2px solid black;
      <rect>
       <x>0</x>
       <y>110</y>
-      <width>101</width>
+      <width>201</width>
       <height>31</height>
      </rect>
     </property>
@@ -294,7 +294,7 @@ border:2px solid black;
      <rect>
       <x>400</x>
       <y>110</y>
-      <width>111</width>
+      <width>181</width>
       <height>31</height>
      </rect>
     </property>
@@ -373,9 +373,9 @@ border:2px solid black;
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>60</y>
-      <width>71</width>
-      <height>31</height>
+      <y>50</y>
+      <width>141</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -395,9 +395,9 @@ border:2px solid black;
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>50</y>
+      <y>30</y>
       <width>61</width>
-      <height>31</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -417,9 +417,9 @@ border:2px solid black;
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>50</y>
+      <y>30</y>
       <width>61</width>
-      <height>31</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -658,8 +658,8 @@ border:2px solid black;
    <widget class="QWidget" name="compass" native="true">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>120</y>
+      <x>190</x>
+      <y>140</y>
       <width>191</width>
       <height>191</height>
      </rect>
@@ -735,10 +735,10 @@ border:2px solid black;
    <widget class="QLabel" name="direction">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>460</y>
-      <width>61</width>
-      <height>31</height>
+      <x>80</x>
+      <y>430</y>
+      <width>141</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -758,9 +758,9 @@ border:2px solid black;
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>460</y>
-      <width>151</width>
-      <height>31</height>
+      <y>430</y>
+      <width>241</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
