@@ -23,6 +23,19 @@ class Compass(QtWidgets.QMainWindow):
         self.timer.timeout.connect(self.update)
         self.timer.start(50)
 
+        ports = serial.tools.list_ports.comports()
+        self.serialInst = serial.Serial()
+        portlist = []
+        for onePort in ports:
+                portlist.append(str(onePort))
+                print (str(onePort))
+            
+        self.serialInst.baudrate = 115200
+        self.serialInst.timeout = 5
+        self.serialInst.port = "COM26"
+        self.serialInst.open()
+
+
     
 
     def paintEvent(self, event):
@@ -57,10 +70,8 @@ class Compass(QtWidgets.QMainWindow):
 
         try:
 
-            ser = serial.Serial('COM6', 115200, timeout=5) # change 'COM6' to the appropriate serial port for your ESP32
-            data = ser.readline().decode() # read the data and decode it from bytes to a string
-            print(data)
-
+            packet = self.serialInst.readline()
+            data = packet.decode("utf").rstrip('\n')
             self.final_data = float(data)
 
             self.final_data += 0
@@ -75,30 +86,6 @@ class Compass(QtWidgets.QMainWindow):
         except UnicodeDecodeError:
         # Handle the exception
             pass
-    
-    def showdirection(self):
-        currentdirection = self.get_heading()
-
-        if currentdirection ==0 or currentdirection <= 44:
-            return ('North')
-        
-        elif currentdirection == 45 or currentdirection <= 89:
-            return ('NorthEast')
-        elif currentdirection == 90 or currentdirection <= 134:
-            return ('East')
-        elif currentdirection == 135 or currentdirection <= 179:
-            return ('SouthEast')
-        elif currentdirection == 180 or currentdirection <= 224:
-            return ('South')
-        elif currentdirection == 225 or currentdirection <= 269:
-            return ('SouthWest')
-        elif currentdirection == 270 or currentdirection <=324:
-            return ('West')
-        elif currentdirection == 325 or currentdirection <=360:
-            return ('NorthWest')
-
-        else:
-            return ('Calibrating')
 
         
     

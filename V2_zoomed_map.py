@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import QVBoxLayout
 from final import Ui_finale #importing class from python file
 from compass import Compass
 from PyQt5.QtCore import QUrl
+import serial.tools.list_ports
 
 
 
@@ -32,6 +33,18 @@ class mainmap(QtWidgets.QMainWindow):
         #layout for map
 		layout = QVBoxLayout(self.ui.map)
 		self.setLayout(layout)
+
+		#port initialization
+		ports = serial.tools.list_ports.comports()
+		self.serialInst = serial.Serial()
+		portlist = []
+		for onePort in ports:
+			portlist.append(str(onePort))
+			print (str(onePort))
+		
+		self.serialInst.baudrate = 115200
+		self.serialInst.port = "COM26"
+		self.serialInst.open()
 
 		#layout for model
 		layout2 = QVBoxLayout(self.ui.cd2)
@@ -93,6 +106,7 @@ class mainmap(QtWidgets.QMainWindow):
 
 		#slider  #inorder to show values from hardware , change the value of setValue = array[]
 		self.ui.slideleft.valueChanged.connect(self.slidechange)
+		
 		self.ui.slideleft.setMaximum(50000)
 		self.value = 0
 		self.ui.slideleft.setValue(self.value)
@@ -103,6 +117,8 @@ class mainmap(QtWidgets.QMainWindow):
 		self.value2 = 0
 		self.ui.slideleft.setValue(self.value2)
 
+		
+
 
 
 	
@@ -110,6 +126,9 @@ class mainmap(QtWidgets.QMainWindow):
 		self.timer = QTimer()
 		self.timer.timeout.connect(self.update)
 		self.timer.start(100)
+		
+
+		
 
 	def update(self):
 		self.value += 100
@@ -118,15 +137,45 @@ class mainmap(QtWidgets.QMainWindow):
 		self.ui.slideleft.setValue(self.value)
 		self.ui.slideright.setValue(self.value2)
 		self.ui.speed1.setText(str(self.value3))
+		# self.ui.d3_value.setText(str())
 
+
+		packet = self.serialInst.readline()
+		
+		data = packet.decode("utf").rstrip('\n')
+		self.ui.d3_value.setText(str(data))
+	
+
+	def portinitiate(self):
+		
+
+		return data
+
+		# self.ui.d3_value.setText(str(data))
+
+		
+		
 	def slidechange(self):
 		self.value = self.ui.slideleft.value()
 		self.ui.ovl4.setText(str(self.value))
-		print(self.value)
+	
 	
 	def slidechange2(self):
 		self.value2 = self.ui.slideright.value()
 		self.ui.ov1.setText(str(self.value2))
+
+	# def getrawdata(self):
+	# 	ser = serial.Serial('COM26', 115200, timeout=5)
+	# 	data = b''
+	# 	while True:
+	# 		# read all available bytes from the serial port
+	# 		new_data = ser.read(ser.in_waiting)
+	# 		if not new_data:
+	# 			break
+	# 		data += new_data
+	# 	# decode the accumulated data to a string
+	# 	return data.decode()
+
 
 
 
