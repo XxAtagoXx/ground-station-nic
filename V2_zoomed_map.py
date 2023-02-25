@@ -14,43 +14,44 @@ from final import Ui_finale #importing class from python file
 from compass import Compass
 from PyQt5.QtCore import QUrl
 import serial.tools.list_ports
+import time
 
 
 
 class mainmap(QtWidgets.QMainWindow):
-	def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
 
-		super().__init__(*args, **kwargs)
-		self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        super().__init__(*args, **kwargs)
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 
-		self.ui = Ui_finale()
-		self.ui.setupUi(self)
-		# self.uicompass = Compass()
-		
-		#--loads the map.ui 
-		
-		self.setWindowTitle("Ground control")
+        self.ui = Ui_finale()
+        self.ui.setupUi(self)
+        # self.uicompass = Compass()
+        
+        #--loads the map.ui 
+        
+        self.setWindowTitle("Ground control")
         #layout for map
-		layout = QVBoxLayout(self.ui.map)
-		self.setLayout(layout)
+        self.layout = QVBoxLayout(self.ui.map)
+        self.setLayout(self.layout)
 
-		#port initialization
-		ports = serial.tools.list_ports.comports()
-		self.serialInst = serial.Serial()
-		portlist = []
-		for onePort in ports:
-			portlist.append(str(onePort))
-			print (str(onePort))
-		
-		self.serialInst.baudrate = 115200
-		self.serialInst.port = "COM26"
-		self.serialInst.open()
+        #port initialization
+        # ports = serial.tools.list_ports.comports()
+        # self.serialInst = serial.Serial()
+        # portlist = []
+        # for onePort in ports:
+        # 	portlist.append(str(onePort))
+        # 	print (str(onePort))
+        
+        # self.serialInst.baudrate = 115200
+        # self.serialInst.port = "COM26"
+        # self.serialInst.open()
 
-		#layout for model
-		layout2 = QVBoxLayout(self.ui.cd2)
+        #layout for model
+        layout2 = QVBoxLayout(self.ui.cd2)
 
-		# layoutcompass = QVBoxLayout(self.ui.compass)
-		# self.setLayout(layoutcompass)
+        # layoutcompass = QVBoxLayout(self.ui.compass)
+        # self.setLayout(layoutcompass)
         
         #--gps datas
         #value_chain = com.getData()
@@ -58,154 +59,186 @@ class mainmap(QtWidgets.QMainWindow):
         #print(big_data_array)
         #gps_array = big_data_array[6]
 
-		latitude = 27.717245 #gps_array[0]
-		longitude = 85.323959 #gps_array[1]
+        latitude = 27.717245 #gps_array[0]
+        longitude = 85.323959 #gps_array[1]
 
         #coordinate = (latitude[17], longitude[17])
 
-		#FOR MODEL
-		self.webview = QWebEngineView()
+        #FOR MODEL
+        self.webview = QWebEngineView()
 
-		# Load the desired website
-		self.webview.load(QUrl("http://127.0.0.1:5500/modelshow.html"))
+        # Load the desired website
+        self.webview.load(QUrl("http://127.0.0.1:5500/modelshow.html"))
 
-		
-       
-		self.map = folium.Map(
-            tiles='http://mt1.google.com/vt/lyrs=m&h1=p1Z&x={x}&y={y}&z={z}',
-            name='real',
-            zoom_start=19,
-            max_zoom=20,
-            attr='Google Map',
-            location = (latitude,longitude) #coordinate replace with longitude and latitude latitude
-        )
         
-        #save map data to data object and layout
-		data = io.BytesIO()
-		self.map.save(data, close_file=False)
-		self.map_view = QWebEngineView()
-		self.map_view.setHtml(data.getvalue().decode())
+       
+        #for map
+        self.map = folium.Map(
+                tiles='Stamen Terrain',
+                name='real',
+                zoom_start=14,
+                max_zoom=20,
+                attr='Google Map',
 
+                location = (latitude,longitude) #coordinate replace with longitude and latitude latitude
+            )
+        # self.marker1 = folium.Marker(
+        # [27.717245,85.323959], popup="rocket", draggable= True
+        # ).add_to(self.map) #marker1
+
+
+        self.marker1 = folium.Marker(
+        [27.717245,85.323959], popup="rocket", draggable= True
+        ).add_to(self.map) #marker1
+
+        self.marker2 = folium.Marker(
+        [27.6588, 85.3247], popup="rocketfinal"
+        ).add_to(self.map)  # marker2
+
+        self.line1 = 27.717245
+        self.line2 = 85.323959
+
+        folium.PolyLine([(self.line1,self.line2),(27.6588, 85.3247)], weight = 18 , color = "yellow").add_to(self.map)
+
+        folium.PolyLine([(27.717245, 85.323959), (27.6588, 85.3247)], fill=True, weight=2, fill_color="yellow",
+                    color="red").add_to(self.map)
+        
+        
+        layout2.addWidget(self.webview)
+        # layoutcompass.addWidget(self.uicompass)
+    
+
+        #button
+
+        #self.clicked = [self.ui.coursebtn.clicked.connect(self.mode),self.ui.launch.clicked.connect(self.mode)]
+        self.ui.cross.clicked.connect(self.close_window)
+
+
+        #showing accurate direction
+        # self.currentdirection =  self.uicompass.showdirection()
+
+        # print(self.currentdirection)
+
+        #slider  #inorder to show values from hardware , change the value of setValue = array[]
+        self.ui.slideleft.valueChanged.connect(self.slidechange)
+        
+        self.ui.slideleft.setMaximum(50000)
+        self.value = 0
+        self.ui.slideleft.setValue(self.value)
+
+        #slider2
+        self.ui.slideright.valueChanged.connect(self.slidechange2)
+        self.ui.slideright.setMaximum(50000)
+        self.value2 = 0
+        self.ui.slideleft.setValue(self.value2)
+
+        
+
+
+
+    
+        #creating timer
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update)
+        self.timer.start(100)
+
+        #for map
+       
+        self.showmap()
 
        
-		layout.addWidget(self.map_view)
-		layout2.addWidget(self.webview)
-		# layoutcompass.addWidget(self.uicompass)
-	
+    def showmap(self):
+            #save map data to data object and layout
+        data = io.BytesIO()
+        self.map.save(data, close_file=False)
+        self.map_view = QWebEngineView()
+        self.map_view.setHtml(data.getvalue().decode())
+        self.layout.addWidget(self.map_view)
 
-		#button
+ 
+       
+ 
+    def update(self):
+        
 
-		#self.clicked = [self.ui.coursebtn.clicked.connect(self.mode),self.ui.launch.clicked.connect(self.mode)]
-		self.ui.cross.clicked.connect(self.close_window)
-
-
-		#showing accurate direction
-		# self.currentdirection =  self.uicompass.showdirection()
-
-		# print(self.currentdirection)
-
-		#slider  #inorder to show values from hardware , change the value of setValue = array[]
-		self.ui.slideleft.valueChanged.connect(self.slidechange)
-		
-		self.ui.slideleft.setMaximum(50000)
-		self.value = 0
-		self.ui.slideleft.setValue(self.value)
-
-		#slider2
-		self.ui.slideright.valueChanged.connect(self.slidechange2)
-		self.ui.slideright.setMaximum(50000)
-		self.value2 = 0
-		self.ui.slideleft.setValue(self.value2)
-
-		
+        self.line1 
+        
+        self.value += 100
+        self.value2 += 100
+        self.value3 = self.value+self.value2
+        self.ui.slideleft.setValue(self.value)
+        self.ui.slideright.setValue(self.value2)
+        self.ui.speed1.setText(str(self.value3))
+        
+        # self.ui.d3_value.setText(str())
 
 
+        # packet = self.serialInst.readline()
+        
+        # data = packet.decode("utf").rstrip('\n')
+        # self.ui.d3_value.setText(str(data))
+    
 
-	
-		#creating timer
-		self.timer = QTimer()
-		self.timer.timeout.connect(self.update)
-		self.timer.start(100)
-		
+    def portinitiate(self):
+        
 
-		
+        return data
 
-	def update(self):
-		self.value += 100
-		self.value2 += 100
-		self.value3 = self.value+self.value2
-		self.ui.slideleft.setValue(self.value)
-		self.ui.slideright.setValue(self.value2)
-		self.ui.speed1.setText(str(self.value3))
-		# self.ui.d3_value.setText(str())
+        # self.ui.d3_value.setText(str(data))
 
+        
+        
+    def slidechange(self):
+        self.value = self.ui.slideleft.value()
+        self.ui.ovl4.setText(str(self.value))
+    
+    
+    def slidechange2(self):
+        self.value2 = self.ui.slideright.value()
+        self.ui.ov1.setText(str(self.value2))
 
-		packet = self.serialInst.readline()
-		
-		data = packet.decode("utf").rstrip('\n')
-		self.ui.d3_value.setText(str(data))
-	
-
-	def portinitiate(self):
-		
-
-		return data
-
-		# self.ui.d3_value.setText(str(data))
-
-		
-		
-	def slidechange(self):
-		self.value = self.ui.slideleft.value()
-		self.ui.ovl4.setText(str(self.value))
-	
-	
-	def slidechange2(self):
-		self.value2 = self.ui.slideright.value()
-		self.ui.ov1.setText(str(self.value2))
-
-	# def getrawdata(self):
-	# 	ser = serial.Serial('COM26', 115200, timeout=5)
-	# 	data = b''
-	# 	while True:
-	# 		# read all available bytes from the serial port
-	# 		new_data = ser.read(ser.in_waiting)
-	# 		if not new_data:
-	# 			break
-	# 		data += new_data
-	# 	# decode the accumulated data to a string
-	# 	return data.decode()
+    # def getrawdata(self):
+    # 	ser = serial.Serial('COM26', 115200, timeout=5)
+    # 	data = b''
+    # 	while True:
+    # 		# read all available bytes from the serial port
+    # 		new_data = ser.read(ser.in_waiting)
+    # 		if not new_data:
+    # 			break
+    # 		data += new_data
+    # 	# decode the accumulated data to a string
+    # 	return data.decode()
 
 
 
 
-	def mode(self):
-	
-	
-		if self.clicked[0]:
+    def mode(self):
+    
+    
+        if self.clicked[0]:
 
-			self.ui.direction1.setText("north")
-			print("course")
+            self.ui.direction1.setText("north")
+            print("course")
 
-		elif self.clicked == self.clicked[1]:
-			self.ui.mode1.setText("launch")
-			print("launch")
+        elif self.clicked == self.clicked[1]:
+            self.ui.mode1.setText("launch")
+            print("launch")
 
 
-	
-	
-		
-	def close_window(self):
-		self.close()
+    
+    
+        
+    def close_window(self):
+        self.close()
       
 
-		
+        
 
 
 
 
 if __name__ == "__main__":
-	app = QtWidgets.QApplication([])
-	widget = mainmap()
-	widget.show()
-	app.exec_()
+    app = QtWidgets.QApplication([])
+    widget = mainmap()
+    widget.show()
+    app.exec_()
