@@ -76,8 +76,17 @@ class mainmap(QtWidgets.QMainWindow):
         self.map = folium.Map(
                 tiles='Stamen Terrain',
                 name='real',
-                zoom_start=14,
-                max_zoom=20,
+                zoom_start=12.5,
+                max_zoom=21,
+                attr='Google Map',
+
+                location = (latitude,longitude) #coordinate replace with longitude and latitude latitude
+            )
+        self.map2 = folium.Map(
+                tiles='Stamen Terrain',
+                name='real',
+                zoom_start=12.5,
+                max_zoom=21,
                 attr='Google Map',
 
                 location = (latitude,longitude) #coordinate replace with longitude and latitude latitude
@@ -87,9 +96,7 @@ class mainmap(QtWidgets.QMainWindow):
         # ).add_to(self.map) #marker1
 
 
-        self.marker1 = folium.Marker(
-        [27.717245,85.323959], popup="rocket", draggable= True
-        ).add_to(self.map) #marker1
+    
 
         self.marker2 = folium.Marker(
         [27.6588, 85.3247], popup="rocketfinal"
@@ -98,7 +105,7 @@ class mainmap(QtWidgets.QMainWindow):
         self.line1 = 27.717245
         self.line2 = 85.323959
 
-        folium.PolyLine([(self.line1,self.line2),(27.6588, 85.3247)], weight = 18 , color = "yellow").add_to(self.map)
+        folium.PolyLine([(27.717245, 85.323959),(27.6588, 85.3247)], weight = 18 , color = "yellow").add_to(self.map)
 
         folium.PolyLine([(27.717245, 85.323959), (27.6588, 85.3247)], fill=True, weight=2, fill_color="yellow",
                     color="red").add_to(self.map)
@@ -143,18 +150,48 @@ class mainmap(QtWidgets.QMainWindow):
         self.timer.start(100)
 
         #for map
-       
+        self.ui.start.clicked.connect(self.noshowmap)
+        self.ui.start.clicked.connect(self.showmap)
         self.showmap()
-
+        self.i = 1
        
-    def showmap(self):
-            #save map data to data object and layout
-        data = io.BytesIO()
-        self.map.save(data, close_file=False)
-        self.map_view = QWebEngineView()
-        self.map_view.setHtml(data.getvalue().decode())
-        self.layout.addWidget(self.map_view)
+        
+    def noshowmap(self):
+        self.i += 1 
+        self.map2.save(self.data, close_file=False)
+        self.map_view2 = QWebEngineView()
+        self.map_view2.setHtml(self.data.getvalue().decode())
+        self.layout.replaceWidget(self.map_view, self.map_view2)
 
+        if self.i > 3:
+            #something
+            self.ui.map.hide()  
+        
+        
+    def showmap(self):
+                  #save map data to data object and layout
+        
+      
+        self.marker1 = folium.Marker(
+        [self.line1, self.line2], popup="rocket", draggable= True, icon= folium.Icon(color='green')
+        ).add_to(self.map) #marker1
+        
+        self.data = io.BytesIO()
+        self.map.save(self.data, close_file=False)
+        
+        self.map_view = QWebEngineView()
+       
+        self.map_view.setHtml(self.data.getvalue().decode())
+      
+        self.layout.addWidget(self.map_view)
+        
+        
+        self.ui.map.show()
+           # Calculate the step size for the animation
+        self.step_lat = (27.6588 -  27.717245) / 10
+        self.step_lon = (85.3247 - 85.323959) / 10
+        self.line1 += self.step_lat
+        self.line2 += self.step_lon
  
        
  
