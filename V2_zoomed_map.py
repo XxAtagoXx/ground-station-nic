@@ -20,6 +20,7 @@ import time
 
 class mainmap(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
+        self.i = 1
 
         super().__init__(*args, **kwargs)
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -31,10 +32,7 @@ class mainmap(QtWidgets.QMainWindow):
         #--loads the map.ui 
         
         self.setWindowTitle("Ground control")
-        #layout for map
-        self.layout = QVBoxLayout(self.ui.map)
-        self.setLayout(self.layout)
-
+       
         #port initialization
         # ports = serial.tools.list_ports.comports()
         # self.serialInst = serial.Serial()
@@ -47,8 +45,13 @@ class mainmap(QtWidgets.QMainWindow):
         # self.serialInst.port = "COM26"
         # self.serialInst.open()
 
-        #layout for model
+        #layout for model and map 
+        self.layout = QVBoxLayout(self.ui.map)
+        self.setLayout(self.layout)
+
         layout2 = QVBoxLayout(self.ui.cd2)
+
+        self.layout3 = QVBoxLayout(self.ui.map)
 
         # layoutcompass = QVBoxLayout(self.ui.compass)
         # self.setLayout(layoutcompass)
@@ -128,6 +131,8 @@ class mainmap(QtWidgets.QMainWindow):
 
         #slider  #inorder to show values from hardware , change the value of setValue = array[]
         self.ui.slideleft.valueChanged.connect(self.slidechange)
+        # self.ui.slideleft.valueChanged.connect(self.noshowmap)
+        # self.ui.slideleft.valueChanged.connect(self.showmap)
         
         self.ui.slideleft.setMaximum(50000)
         self.value = 0
@@ -135,9 +140,16 @@ class mainmap(QtWidgets.QMainWindow):
 
         #slider2
         self.ui.slideright.valueChanged.connect(self.slidechange2)
+       
+
         self.ui.slideright.setMaximum(50000)
         self.value2 = 0
         self.ui.slideleft.setValue(self.value2)
+
+        #progressbar
+
+        self.value4 = 10
+        self.ui.battery.setValue(10)
 
         
 
@@ -147,33 +159,32 @@ class mainmap(QtWidgets.QMainWindow):
         #creating timer
         self.timer = QTimer()
         self.timer.timeout.connect(self.update)
-        self.timer.start(100)
+        self.timer.start(2000)
 
         #for map
         self.ui.start.clicked.connect(self.noshowmap)
         self.ui.start.clicked.connect(self.showmap)
         self.showmap()
-        self.i = 1
-       
+        
+        self.layout.addWidget(self.map_view)
+    
         
     def noshowmap(self):
-        self.i += 1 
-        self.map2.save(self.data, close_file=False)
-        self.map_view2 = QWebEngineView()
-        self.map_view2.setHtml(self.data.getvalue().decode())
-        self.layout.replaceWidget(self.map_view, self.map_view2)
+       
+      
+   
+        self.ui.map.hide()  
+        self.layout3.addWidget(self.map_view)
 
-        if self.i > 3:
-            #something
-            self.ui.map.hide()  
+     
         
         
     def showmap(self):
                   #save map data to data object and layout
         
-      
+        self.i += 1 
         self.marker1 = folium.Marker(
-        [self.line1, self.line2], popup="rocket", draggable= True, icon= folium.Icon(color='green')
+        [self.line1, self.line2], popup="rocket", draggable= True, icon= folium.Icon(color='red')
         ).add_to(self.map) #marker1
         
         self.data = io.BytesIO()
@@ -188,12 +199,15 @@ class mainmap(QtWidgets.QMainWindow):
         
         self.ui.map.show()
            # Calculate the step size for the animation
-        self.step_lat = (27.6588 -  27.717245) / 10
-        self.step_lon = (85.3247 - 85.323959) / 10
-        self.line1 += self.step_lat
-        self.line2 += self.step_lon
+        
+
+        if self.i >= 1 and self.i <= 10:
+            self.step_lat = (27.6588 -  27.717245) / 10
+            self.step_lon = (85.3247 - 85.323959) / 10
+            self.line1 += self.step_lat
+            self.line2 += self.step_lon
  
-       
+      
  
     def update(self):
         
@@ -202,10 +216,12 @@ class mainmap(QtWidgets.QMainWindow):
         
         self.value += 100
         self.value2 += 100
+        self.value4 += 1
         self.value3 = self.value+self.value2
         self.ui.slideleft.setValue(self.value)
         self.ui.slideright.setValue(self.value2)
         self.ui.speed1.setText(str(self.value3))
+        self.ui.battery.setValue(self.value4)
         
         # self.ui.d3_value.setText(str())
 

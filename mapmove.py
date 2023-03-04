@@ -26,7 +26,7 @@ class Map:
             self.yellow_polyline.locations = locations
 
             # redraw the map
-            self.map.add_child(self.yellow_polyline)
+            self.map.add_children(self.yellow_polyline)
             time.sleep(0.1)
 # create the map object
 m = Map()

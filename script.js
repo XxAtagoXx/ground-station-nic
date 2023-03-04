@@ -236,6 +236,7 @@ const render = a => {
   updateVertices(a);
   renderer.clear();
   renderer.render(scene, camera);
+  
 };
 requestAnimationFrame(render);
 renderer.render(scene, camera);
