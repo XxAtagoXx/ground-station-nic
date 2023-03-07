@@ -48,9 +48,9 @@
         var map = L.map(
             "map",
             {
-                center: [24.687860,78.412018],
+                center: [27.5178,85.3136],
                 crs: L.CRS.EPSG3857,
-                zoom: 18,
+                zoom: 13,
                 zoomControl: true,
                 preferCanvas: false,
             }
@@ -60,21 +60,17 @@
 
     
 
-        L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
-            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
-                '<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; ' +
-                'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-            subdomains: 'abcd',
-            minZoom: 0,
-            maxZoom: 20,
-            ext: 'png'
+       
+
+        var tile_layer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
         }).addTo(map);
 
         
     
-        longitude = 24.687860
-        latitude = 78.412018     
+        longitude = 27.5178
+        latitude = 85.3136    
         var marker = L.marker(
             [longitude, latitude],
             {}
@@ -97,7 +93,7 @@
             marker.setLatLng([latitude, longitude]).update();
         }
 
-        moveMarker(24.687860,78.412018);
+        moveMarker(27.5178,85.3136);
         
         // setInterval(function() {
         //     // Replace these values with code that retrieves the latitude and longitude
