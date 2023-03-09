@@ -53,6 +53,7 @@
         
         var marker = L.marker([27.6588,85.3247], { icon: icon }).addTo(map); //rocket
         var markerP = L.marker([27.6588,85.3247]).addTo(map); //initial positioning
+
         var markerQ = L.marker([27.6710,85.4298]).addTo(map); //last positioning
        
 
@@ -61,6 +62,9 @@
         var latitude = 85.3247 
         var longitude2 = 27.6710 //last position
         var latitude2 = 85.4298   
+        var lm = 27.6649
+        var lm2 = 85.37725
+
         var LatLng2 = [[longitude,latitude], [longitude2,latitude2]]
         L.polyline(LatLng2,{color: 'red'}).addTo(map); //route
 
@@ -71,7 +75,8 @@
             var newMarker = L.marker([longitude,latitude]).addTo(map);
             L.Routing.control({
                 waypoints: [
-                    L.latLng(longitude,latitude),
+                    L.latLng(longitude,latitude), 
+                    L.latLng(lm,lm2),
                     L.latLng( longitude2,latitude2)
                 ],
                 lineOptions: {
