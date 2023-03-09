@@ -14,14 +14,14 @@
       camera.position.z = 5;
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setClearColor(0xE4E4E4);
+      renderer.setClearColor(0x1E1E1E);
       renderer.shadowMap.enabled = true;
       renderer.shadowMapSoft = true;
 
       document.getElementById("canvas-container").appendChild(renderer.domElement);
 
       // Create a cube geometry and a material
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const geometry = new THREE.BoxGeometry(1, 4, 1);
       const material = new THREE.MeshStandardMaterial({
             emissive: 0xbd4be3,
             emissiveIntensity: 0.5,
@@ -99,8 +99,10 @@
       function animate() {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
-        cube.rotation.y += 0.1
-        cube.rotation.x += 0.1
+        cube.rotation.y += 0.04
+        cube.rotation.x = 90
+     
+       
         
         
       }

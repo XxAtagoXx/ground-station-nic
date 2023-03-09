@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>rocketlocation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="map" style="width:100%; height: 100vh"></div>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+
+    <script>
+
+        var map = L.map(
+            "map", {
+                center: [27.6588, 85.3247],
+                crs: L.CRS.EPSG3857,
+                zoom: 13,
+                zoomControl: true,
+                preferCanvas: false,
+            }
+        );
+
+        mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
+        L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+            maxZoom: 20,
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var icon = L.icon({
+            iconUrl: 'rocket.png',
+            iconSize: [70, 70]
+        })
+
+
+        var marker = L.marker([27.6588, 85.3247], {
+            icon: icon
+        }).addTo(map);
+
+        map.on('click', function (e) {
+            
+
+            console.log(e)
+           
+            var newMarker = L.marker([27.6710, 85.4298]).addTo(map);
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(27.6588, 85.3247),
+                    L.latLng(27.6710, 85.4298)
+                ],
+                router: new L.Routing.osrmv1({
+                    serviceUrl: 'http://router.project-osrm.org/route/v1'
+                }),
+                createMarker: function () {
+                    return null;
+                },
+                lineOptions: {
+                    styles: [{
+                        color: "transparent",
+                        opacity: 0
+                    }]
+                }
+            }).on('routesfound', function (e) {
+                var routes = e.routes;
+                console.log(routes);
+
+                e.routes[0].coordinates.forEach(function (coord, index) {
+                    setTimeout(function () {
+                        marker.setLatLng([coord.lat, coord.lng]);
+                    }, 20 * index)
+                })
+
+            }).addTo(map);
+        });
+
+
+    </script>
+
+
+</body>
+
+</html>
