@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Rocket  map</title>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+        <link rel="stylesheet" href="Leaflet/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
 
     <style>
@@ -20,7 +20,8 @@
         
         
         <div id="map" style="width:100%; height: 100vh"></div>
-        <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
+        <script src="/Leaflet/leaflet.js"></script>
+        <!-- <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script> -->
         <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-realtime/2.0.0/leaflet-realtime.min.js" type="text/javascript"></script>
         <script src="Leaflet.EdgeMarker.js"></script>
@@ -38,7 +39,9 @@
                              
                                 [ 27.6707 , 85.3888 ],
                                 
-                                [ 27.6708 , 85.4005 ]];
+                                [ 27.6708 , 85.4005 ],
+
+                                [27.6710 , 85.4298]];
             
             // console.log(center);
             var index = 0;
@@ -46,7 +49,7 @@
             
                        
 
-           // set interval to change center value every 5 seconds
+           //set interval to change center value every 5 seconds
             // setInterval(function() {
             //             center = coordinates[index];
             //             index = (index + 1) % coordinates.length;
@@ -59,8 +62,8 @@
             //             marker = L.marker(center, { icon: icon }).addTo(map); //rocket
             //             console.log(center);
 
-            //             marker = L.marker(center, { icon: icon }).addTo(map); //rocket
-                    
+                       
+                        
 
                   
             //         }, 2000);
@@ -73,12 +76,17 @@
                     {
                         center: center,
                         crs: L.CRS.EPSG3857,
-                        zoom: 13,
+                        zoom: 11.5,
                         zoomControl: true,
                         preferCanvas: false,
+                        dragging: false,
+                        scrollWheelZoom: "center",
+                        
+                        
+                        
                     }
                 );
-
+            
             // Stamen's Toner basemap
             L.tileLayer(
             'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
@@ -92,15 +100,22 @@
             //add circle
             var icon = L.icon({
             iconUrl: 'rocket.png',
-            iconSize: [70, 70] })
+            iconSize: [50, 50] })
         
             
             marker = L.marker(center, { icon: icon }).addTo(map); //rocket
-            L.circle(center, 5000).addTo(map);
+            // L.circle(center, 15000).addTo(map); //initial circle
+            L.circle([27.6710 , 85.4298], 1500, {color:'yellow'}).addTo(map); //last circle
+            L.circle(center, 15000, {color:'black'}).addTo(map);
+            markerP = L.marker(center).addTo(map); //initial positioning
+            L.circle(center,{radius : 1500,color : 'red'}).addTo(map);
+     
+            markerQ = L.marker([27.6710,85.4298]).addTo(map); //last positioning
+        
 
             // Add polar craticule
             var rings = [];
-            [500, 1000, 1500, 2000, 2500].forEach(function(r) {
+            [ 8000,9000, 10000 ,12000, 14000, 15000].forEach(function(r) {
                 rings.push(
                     L.circle(
                         center, {
@@ -114,7 +129,7 @@
             });
 
             var xy1 = map.options.crs.project(L.latLng(center)),
-                radius = 5500;
+                radius = 15500;
             var right = L.point(xy1).add([radius, 0]),
                 left = L.point(xy1).subtract([radius, 0]),
                 tops = L.point(xy1).add([0, radius]),
@@ -149,9 +164,7 @@
             ];
 
 
-            markerP = L.marker(center).addTo(map); //initial positioning
-            markerQ = L.marker([27.6710,85.4298]).addTo(map); //last positioning
-        
+          
 
 
              //add the EdgeMarker to the map.
@@ -160,7 +173,7 @@
             icon: L.icon({ // style markers
                 iconUrl : 'arrow.png',
                 clickable: true,
-                iconSize: [100,100],
+                iconSize: [80,80],
                 iconAnchor: [24, 24]
             })
             }).addTo(map);
@@ -212,7 +225,7 @@
         var radar = L.geoJSON(
                 radarbeam, {
                 onEachFeature : function(feature, layer) {
-                    var arclength = 2;
+                    var arclength = 3;
                     var sumangle = 360;
 
                     // sector is the slice of circle we'll use as a "beam shadow"
@@ -228,9 +241,9 @@
                         sector, {
                         style: function(feature){
                             return {
-                                opacity:0.75,
+                                opacity:0.9,
                                 color: '#109856',
-                                weight:0.2,
+                                weight:0.9,
                                 className:'radar-hand'
                             }
                         }
@@ -238,9 +251,9 @@
                     setInterval(function(){
                         // animate "radar beam"
                         if (sumangle >= 360) {
-                            sumangle = 0;
+                            sumangle = 0; 
                         } else {
-                            sumangle += arclength;
+                            sumangle += 1; //add += to make radar move
                         }
                         var beamlatlngs = layer.getLatLngs(),
                             beamshadowlatlngs = beamshadow.getLayers()[0].getLatLngs();

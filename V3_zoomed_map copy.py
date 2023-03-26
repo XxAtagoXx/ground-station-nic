@@ -15,6 +15,8 @@ from compass import Compass
 from PyQt5.QtCore import QUrl
 import serial.tools.list_ports
 import time
+import subprocess
+
 
 
 
@@ -32,6 +34,9 @@ class mainmap(QtWidgets.QMainWindow):
         #--loads the map.ui 
         
         self.setWindowTitle("Ground control")
+
+        # Start the HTTP server in a separate process
+        http_server = subprocess.Popen(["python", "-m", "http.server"])
        
         #port initialization
         # ports = serial.tools.list_ports.comports()
@@ -66,7 +71,7 @@ class mainmap(QtWidgets.QMainWindow):
 
         # Load the desired website
         self.mapview = QWebEngineView()
-        self.mapview.load(QUrl("http://127.0.0.1:5500/mapv3.html"))
+        self.mapview.load(QUrl("http://127.0.0.1:8000/mapv3.html"))
         self.layout.addWidget(self.mapview)
         # layoutcompass.addWidget(self.uicompass)
     
